@@ -4,6 +4,7 @@ const express = require('express')
 //this is creating a route that the front-end can request data from
 //its an object because animals as many differnt properties
 const { animals } = require('./data/animals')
+const PORT = process.env.PORT || 3001;
 const app = express()
 
 //this function should take req.query as an argument and filter through the animals, returning the new filtered array
@@ -69,6 +70,6 @@ app.get('/api/animals', (req, res) => {
     // get out this link http://localhost:3001/api/animals?name=Erica then running npm start you will see Erica in the console because the req.query was this query string ?name=Erica was added to the url as a query string
 })
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log('API server now on port 3001!')
 })
