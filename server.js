@@ -51,6 +51,15 @@ function filterByQuery(query, animalsArray){
 }
 
 
+//this shows a single animal at the index of 1 due to the query of id 
+//http://localhost:3001/api/animals/1
+function findById(id, animalsArray) {
+  const result = animalsArray.filter(animal => animal.id === id) [0];
+  return result
+}
+
+
+//gets are your routes for user to get access to the json file
 //adding the route-get requires 2 arugments-1st string that describes the route the client wil have to fetch from, the second is the clalback function that will execute every time the route is accessed with a GET request
 app.get('/api/animals', (req, res) => {
 //     //we are using send() method from res parameter(short for response) to send the string hello to our client
@@ -70,6 +79,21 @@ app.get('/api/animals', (req, res) => {
     // get out this link http://localhost:3001/api/animals?name=Erica then running npm start you will see Erica in the console because the req.query was this query string ?name=Erica was added to the url as a query string
 })
 
-app.listen(PORT, () => {
-    console.log('API server now on port 3001!')
+//this req objects gives you access to the paramas -- the param object need to be define in the route path with <route>/:<parameterName>
+//this creates a new GET route for animals so with :id is added to the query
+//the order of these routes are important the param route must come after the other GET route. You may have already noticed that theres a function called findById() int eh callback similar to filterByQuery() expect this time were passing req.params.id you could use query filter but since we are only returning a single animal id is unique--this is shorter option
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  //this will display the correct page other a 404 message if the link is not right
+  if (result) {
+  res.json(result)
+  } else {
+    res.sendStatus(404)
+  }
 })
+
+app.listen(PORT, () => {
+  console.log(`API server now on port ${PORT}!`);
+});
+
+//link to deployed file https://intense-dusk-76815.herokuapp.com/api/animals
