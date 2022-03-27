@@ -30,6 +30,20 @@ const getAnimals = (formData = {}) => {
   });
 
   console.log(queryUrl);
+  //adding this code to make this function work by getting the animals information
+  fetch(queryUrl)
+  .then(response => {
+    //when using fetch we have to check if the ok property in the response is true or false-- this checks for any HTTP status code that signifies an error-- of there is an error we just alert the user that theres something wrong, if everything is okay we still have the json() method to parse our response into readable JSON format
+    if (!response.ok) {
+      return alert('Error: ' + response.statusText)
+    }
+    return response.json()
+  })
+  //then we printresults() where it generates cards for each animal and prints them to the page
+  .then(animalData => {
+    console.log(animalData)
+    printResults(animalData)
+  })
 
 };
 

@@ -182,7 +182,18 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'))
 })
 //to get if this html page is working http://localhost:3001 in the browser after npm start
-
+//to test this animals route http://localhost:3001/animals
+app.get('/animals', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/animals.html'))
+})
+app.get('/zookeepers', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/zookeepers.html'))
+})
+//* wildcard routes in case a user makes a route that doesn't exist it would go back to the homepage
+//this route should always come last
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'))
+})
 
 
 //link to deployed file https://intense-dusk-76815.herokuapp.com/api/animals
