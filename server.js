@@ -1,4 +1,5 @@
 //if after npm start the server has not reset do ctrl c and then y
+//you can test things by putting in your http://localhost:3001/api/animals and then complete the query string
 
 //need to be added to write the new animals into the json file from the POST request
 const fs = require('fs')
@@ -15,6 +16,10 @@ const app = express()
 app.use(express.urlencoded({ extended: true }))
 //parse incoming JSON data
 app.use(express.json())
+
+//if you have css and script files that are not showing when you load your html you need to create a route to use those files
+//this needs to be placed near other app.use or it may not work--middlewear is express.static 11.3.4
+app.use(express.static('public'))
 
 //this function should take req.query as an argument and filter through the animals, returning the new filtered array
 //this will be called in the app.get() function
@@ -169,5 +174,15 @@ app.post('/api/animals', (req, res) => {
 app.listen(PORT, () => {
   console.log(`API server now on port ${PORT}!`);
 });
+
+//the / brings us to the route of the server--this isused to create a homepage for a server
+//this is to respond with an html page to display in the browser res.sendfile is to tell them where to find the file we want our server to read and send back to the client
+//path is used to find the correct location of the html code 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'))
+})
+//to get if this html page is working http://localhost:3001 in the browser after npm start
+
+
 
 //link to deployed file https://intense-dusk-76815.herokuapp.com/api/animals
